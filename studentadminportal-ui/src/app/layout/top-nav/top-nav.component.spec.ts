@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatToolbar } from '@angular/material/toolbar';
+
+import { TopNavComponent } from './top-nav.component';
+
+describe('TopNavComponent', () => {
+  let component: TopNavComponent;
+  let fixture: ComponentFixture<TopNavComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [TopNavComponent],
+    });
+    fixture = TestBed.createComponent(TopNavComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
