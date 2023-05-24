@@ -19,12 +19,12 @@ export class StudentService {
     this.studentsChanged.next(this.students.slice());
   }
 
-  getStudents() {
+  getStudents(): IStudent[] {
     return this.students.slice();
   }
 
-  getStudent(index: number) {
-    return this.students[index];
+  getStudent(id: string): IStudent | undefined {
+    return this.students.find((student) => student.id === id);
   }
 
   addStudent(student: IStudent) {

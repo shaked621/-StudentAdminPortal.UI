@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IStudent } from '../models/api-models/student.model';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { StudentService } from '../students/student.service';
 
 @Injectable({
@@ -20,5 +20,9 @@ export class ApiConnectionService {
       .subscribe((_students) => {
         this.studentService.setStudents(_students);
       });
+  }
+
+  getStudent(studentId: string): Observable<IStudent> {
+    return this.httpClient.get<IStudent>(this.url + '/students/' + studentId);
   }
 }
