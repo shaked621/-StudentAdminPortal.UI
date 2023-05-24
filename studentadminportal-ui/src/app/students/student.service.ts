@@ -38,7 +38,8 @@ export class StudentService {
     this.studentsChanged.next(this.students.slice());
   }
 
-  deleteStudent(index: number) {
+  deleteStudent(id: string) {
+    const index = this.students.findIndex((studentId) => studentId.id === id);
     this.students.splice(index, 1);
     this.studentsChanged.next(this.students.slice());
   }

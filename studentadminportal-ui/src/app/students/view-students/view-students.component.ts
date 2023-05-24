@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiConnectionService } from 'src/app/services/apiconnection.service';
 import { StudentService } from '../student.service';
@@ -13,8 +13,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './view-students.component.html',
   styleUrls: ['./view-students.component.css'],
 })
-export class ViewStudentsComponent implements OnInit {
-  routeParam: Subscription = new Subscription();
+export class ViewStudentsComponent implements OnInit, OnDestroy {
+  routeParam$: Subscription = new Subscription();
+  getStudent$: Subscription = new Subscription();
+  deleteStudent$: Subscription = new Subscription();
   studentId: string | null | undefined;
   student: IStudent = {
     id: '',
@@ -43,14 +45,15 @@ export class ViewStudentsComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly genderService: GenderService,
     private readonly studentService: StudentService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.routeParam = this.route.paramMap.subscribe((params) => {
+    this.routeParam$ = this.route.paramMap.subscribe((params) => {
       this.studentId = params.get('id');
       if (this.studentId) {
-        this.apiConnectionService
+        this.getStudent$ = this.apiConnectionService
           .getStudent(this.studentId)
           .subscribe((res) => {
             this.student = res;
@@ -60,8 +63,12 @@ export class ViewStudentsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.routeParam$.unsubscribe();
+    this.getStudent$.unsubscribe();
+  }
   onUpdate() {
-    this.apiConnectionService
+    this.getStudent$ = this.apiConnectionService
       .updateStudent(this.student.id, this.student)
       .subscribe((updateStudent) => {
         if (updateStudent) {
@@ -75,6 +82,22 @@ export class ViewStudentsComponent implements OnInit {
       });
   }
 
-  onDelete() {}
+  onDelete() {
+    this.deleteStudent$ = this.apiConnectionService
+      .deleteStudent(this.student.id)
+      .subscribe((student) => {
+        if (student) {
+          this.studentService.deleteStudent(student.id);
+          this.snackbar.open('Student deleted successfully', undefined, {
+            duration: 2000,
+          });
+          setTimeout(() => {
+            this.router.navigateByUrl('students');
+          }, 2000);
+        } else {
+          console.error(student);
+        }
+      });
+  }
   onAdd() {}
 }

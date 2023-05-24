@@ -48,6 +48,12 @@ export class ApiConnectionService {
     );
   }
 
+  deleteStudent(studentId: string): Observable<IStudent> {
+    return this.httpClient.delete<IStudent>(
+      this.url + '/students/' + studentId
+    );
+  }
+
   getGenders(): void {
     {
       this.httpClient
