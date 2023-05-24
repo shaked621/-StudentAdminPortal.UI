@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiConnectionService } from 'src/app/shared/apiconnection.service';
+import { ApiConnectionService } from 'src/app/services/apiconnection.service';
 
 @Component({
   selector: 'app-top-nav',

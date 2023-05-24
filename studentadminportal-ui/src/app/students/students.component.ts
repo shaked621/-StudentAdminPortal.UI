@@ -12,7 +12,7 @@ import { IStudent } from '../models/api-models/student.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ApiConnectionService } from '../shared/apiconnection.service';
+import { ApiConnectionService } from '../services/apiconnection.service';
 
 @Component({
   selector: 'app-students',

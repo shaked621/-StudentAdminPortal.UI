@@ -13,7 +13,7 @@ export class StudentService {
 
   constructor() {}
 
-  setStudents(students: IStudent[]) {
+  setStudents(students: IStudent[]): void {
     // this.students = students;
     this.students = students;
     this.studentsChanged.next(this.students.slice());
@@ -32,7 +32,8 @@ export class StudentService {
     this.studentsChanged.next(this.students.slice());
   }
 
-  updateStudent(index: number, newStudent: IStudent) {
+  updateStudent(id: string, newStudent: IStudent) {
+    const index = this.students.findIndex((studentId) => studentId.id === id);
     this.students[index] = newStudent;
     this.studentsChanged.next(this.students.slice());
   }

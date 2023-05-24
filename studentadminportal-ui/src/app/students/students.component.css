@@ -16,3 +16,8 @@ table {
 .search-input:focus {
   border: 1px solid #aaa;
 }
+
+.page-header {
+  width: 50%;
+  margin: auto;
+}
