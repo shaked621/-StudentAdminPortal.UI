@@ -6,12 +6,14 @@ import { StudentService } from '../students/student.service';
 import { IGender } from '../models/api-models/gender.model';
 import { GenderService } from './gender.service';
 import { IUpdateStudentRequest } from '../models/api-models/updateStudentRequest';
+import { IAddStudnetRequest } from '../models/api-models/addStudentRequest.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiConnectionService {
-  private url = 'https://localhost:7157';
+  private url = environment.baseApiUrl;
   constructor(
     private httpClient: HttpClient,
     private studentService: StudentService,
@@ -52,6 +54,21 @@ export class ApiConnectionService {
     return this.httpClient.delete<IStudent>(
       this.url + '/students/' + studentId
     );
+  }
+
+  addStudent(newStudent: IAddStudnetRequest): Observable<IStudent> {
+    const request: IAddStudnetRequest = {
+      firstName: newStudent.firstName,
+      lastName: newStudent.lastName,
+      dateOfBirth: newStudent.dateOfBirth,
+      email: newStudent.email,
+      mobile: newStudent.mobile,
+      genderId: newStudent.genderId,
+      genderDescription: newStudent.genderDescription,
+      physicalAddress: newStudent.physicalAddress,
+      postalAddress: newStudent.postalAddress,
+    };
+    return this.httpClient.post<IStudent>(this.url + '/students/add', request);
   }
 
   getGenders(): void {

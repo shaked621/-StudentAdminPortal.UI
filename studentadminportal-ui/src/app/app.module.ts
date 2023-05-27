@@ -11,7 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ViewStudentsComponent } from './students/view-students/view-students.component';
 
 @NgModule({
-  declarations: [AppComponent, TopNavComponent, StudentsComponent, ViewStudentsComponent],
+  declarations: [
+    AppComponent,
+    TopNavComponent,
+    StudentsComponent,
+    ViewStudentsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

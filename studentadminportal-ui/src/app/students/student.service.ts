@@ -7,7 +7,6 @@ import { IStudent } from '../models/api-models/student.model';
   providedIn: 'root',
 })
 export class StudentService {
-  private url = 'https://localhost:7157/students';
   private students: IStudent[] = [];
   studentsChanged: Subject<IStudent[]> = new Subject<IStudent[]>();
 
